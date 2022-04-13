@@ -1,11 +1,15 @@
 ;; (setq dropbox-directory "c:/Users/mj/Documents/My Dropbox/")
 (setq default-directory "c:/work")
+(setq org-directory "c:/Sync/OrgMode")
 
 ;; Add the github dotemacs dir to the load path
 (setq load-path (cons (concat "c:/Projects/dotemacs/") load-path))
-      
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 ;; Load the settings that I want on all computers
-(load "init.el")
+(load "startup.el")
       
 ;;(error 'Done')
 
@@ -168,19 +172,3 @@
 ;;   )
 
 
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(org-agenda-files
-;;    '("c:/Users/MichaelJacobsen/Google Drive/OrgMode"
-;;      "c:/Users/MichaelJacobsen/Google Drive/OrgMode/2022"))
-;;  '(package-selected-packages
-;;    '(multiple-cursors docker treemacs projectile use-package counsel csharp-mode magit)))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
