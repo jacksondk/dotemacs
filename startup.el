@@ -17,6 +17,7 @@
 (set-default-coding-systems 'utf-8)
 (set-language-environment 'utf-8)
 (set-selection-coding-system 'utf-8)
+(setq-default indent-tabs-mode nil)
 
 ;; Setup the spelling checker Hunspell
 (setq ispell-program-name "C:/ProgramData/chocolatey/bin/hunspell.exe")
@@ -135,6 +136,11 @@
      )
    )
   )
+
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
 
 ;; Set org-agenda-files to a list of one element
 (setq org-agenda-files (cons org-directory ()))
