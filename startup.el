@@ -17,6 +17,8 @@
 (set-default-coding-systems 'utf-8)
 (set-language-environment 'utf-8)
 (set-selection-coding-system 'utf-8)
+(set-clipboard-coding-system 'utf-16le)
+
 (setq-default indent-tabs-mode nil)
 
 ;; Setup the spelling checker Hunspell
@@ -64,7 +66,6 @@
 
 ;; No tool bar
 (tool-bar-mode -1)
-
 (load-theme 'deeper-blue t)
 
 ;; Add a package achieve
@@ -137,6 +138,10 @@
    )
   )
 
+(use-package rg
+  :ensure t
+  )
+
 (use-package dashboard
   :ensure t
   :config
@@ -156,7 +161,7 @@
 	 :empty-lines 0)
 	)
       )
-
+(setq org-log-done 'time)
 
 (global-set-key (kbd "C-c C") 'org-capture)
 
