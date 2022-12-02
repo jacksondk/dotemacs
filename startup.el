@@ -21,15 +21,16 @@
 
 (setq-default indent-tabs-mode nil)
 
-;; Setup the spelling checker Hunspell
-(setq ispell-program-name "C:/ProgramData/chocolatey/bin/hunspell.exe")
+;; Setup the spelling checker using the spell.bat file in bin
+;; Currently it forwards the request to wsl hunspell
+(setq ispell-program-name "c:/bin/spell.bat")
 (setq ispell-dictionary "en_US")
 (setq ispell-hunspell-dictionary-alist
       '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "en_US") nil utf-8)))
 
 ;; Use a more modern font - size 11 to make it more readable to my old
 ;; eyes.
-(set-face-attribute 'default nil :font "CaskaydiaCove Nerd Font Mono-11")
+(set-face-attribute 'default nil :font "CaskaydiaCove NF-11")
 
 ;;backup directory
 (setq backup-directory-alist
