@@ -28,13 +28,28 @@
 (setq ispell-hunspell-dictionary-alist
       '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "en_US") nil utf-8)))
 
-;; Use a more modern font - size 11 to make it more readable to my old
+;; Use a more modern font - size 15 to make it more readable to my old
 ;; eyes.
-(set-face-attribute 'default nil :font "CaskaydiaCove NF-11")
+(set-face-attribute 'default nil :font "CaskaydiaCove NF-15")
 
 ;;backup directory
 (setq backup-directory-alist
       '((".*" . "~/.emacs.d/emacs_backup")))
+
+;; Calender setup
+(setq calendar-week-start-day 1) ;; Monday
+(setq calendar-intermonth-text
+      '(propertize
+        (format "%2d"
+                (car
+                 (calendar-iso-from-absolute
+                  (calendar-absolute-from-gregorian (list month day year)))))
+        'font-lock-face 'font-lock-warning-face)) ;; Compute and showw week
+
+(setq calendar-intermonth-header
+      (propertize "Wk"                  ; or e.g. "KW" in Germany
+                  'font-lock-face 'font-lock-keyword-face))
+
 
 ;; https://www.emacswiki.org/emacs/BrowseUrl#h5o-21
 (defun browse-url-edge (url &optional new-window)
@@ -100,31 +115,31 @@
   :config (which-key-mode)
   )
 
-(use-package ivy
-  :ensure t
-  :custom
-  (ivy-count-format "(%d/%d) ")
-  (ivy-use-virtual-buffers t)
-  :config (ivy-mode 1))
+;; (use-package ivy
+;;   :ensure t
+;;   :custom
+;;   (ivy-count-format "(%d/%d) ")
+;;   (ivy-use-virtual-buffers t)
+;;   :config (ivy-mode 1))
 
 
-(use-package counsel
-  :ensure t
-  :after ivy
-  :config (counsel-mode))
+;; (use-package counsel
+;;   :ensure t
+;;   :after ivy
+;;   :config (counsel-mode))
 
-;; Fancy searching in file
-(use-package swiper
-  :ensure t
-  :after ivy
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+;; ;; Fancy searching in file
+;; (use-package swiper
+;;   :ensure t
+;;   :after ivy
+;;   :bind (("C-s" . swiper)
+;;          ("C-r" . swiper)))
 
-;; Toggle a file tree 
-(use-package treemacs
-  :ensure t
-  :bind (("<f8>" . treemacs))
-  )
+;; ;; Toggle a file tree 
+;; (use-package treemacs
+;;   :ensure t
+;;   :bind (("<f8>" . treemacs))
+;;   )
 
 ;; Jump between 'windows' 
 (use-package ace-window
@@ -153,6 +168,8 @@
   :config
   (dashboard-setup-startup-hook))
 
+;; Org-mode setup
+
 ;; Set org-agenda-files to a list of one element
 (setq org-agenda-files (cons org-directory ()))
 (setq org-capture-templates
@@ -168,8 +185,11 @@
 	)
       )
 (setq org-log-done 'time)
-
+(setq org-todo-keywords
+      '((sequence "TODO" "BLOCKED" "|" "DONE" "DELEGATED" "CANCELLED")))
 (global-set-key (kbd "C-c C") 'org-capture)
+;; Week starts on Monday
+(setq org-agenda-start-on-weekday 1)
 
 ;; Select a range and presss C-S-s C-S-s to enable multiple cursors
 (use-package multiple-cursors
@@ -177,7 +197,18 @@
   :bind
   (("C-S-s C-S-s" . 'mc/edit-lines))
   )
+(use-package vertico
+  :init
+  (vertico-mode))
 
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+;; https://github.com/jrblevin/markdown-mode
+(use-package markdown-mode
+  :ensure t
+  )
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
