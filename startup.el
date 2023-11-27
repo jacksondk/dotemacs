@@ -37,6 +37,7 @@
       '((".*" . "~/.emacs.d/emacs_backup")))
 
 ;; Calender setup
+;; Add week number to it
 (setq calendar-week-start-day 1) ;; Monday
 (setq calendar-intermonth-text
       '(propertize
@@ -51,6 +52,7 @@
                   'font-lock-face 'font-lock-keyword-face))
 
 
+;; Start a browser (MS Edge)
 ;; https://www.emacswiki.org/emacs/BrowseUrl#h5o-21
 (defun browse-url-edge (url &optional new-window)
   "Open using shell command start"
@@ -65,7 +67,7 @@
 
 (setq browse-url-browser-function 'browse-url-edge)
 
-;; Open a devops "link" such as AB#530 - however, it only look for the
+;; Open a devops "link" such as AB#530 - however, it only looks for the
 ;; number below the pointer
 (defun open-devops ()
   "Open a AB#??? link as work item in Azure Boards"
@@ -78,6 +80,41 @@
       (message link)
       (browse-url-edge link)
       ))
+  )
+
+(defun open-devops-2 ()
+  "Open a AB#??? link as work item in Azure Boards"
+  (interactive)
+  (let ((curWord (mj-find-ab)))
+    (progn
+      (message (concat "Open " curWord))  
+      (if curWord
+          (browse-url-edge
+           (concat "https://dev.azure.com/iqinabox/Crown Data/_workitems/edit/" (substring curWord 3 nil)))
+        )
+      )
+    )
+  )
+
+(defun mj-find-ab ()
+  "Find AB#dddd string under cursor"
+  (let ((ab-regex "\\(AB#[0-9]+\\)"))
+    (if (or (looking-at ab-regex)
+            (save-excursion
+              (skip-chars-backward "0-9")
+              (skip-chars-backward "#")
+              (skip-chars-backward "AB")
+              (looking-at ab-regex)))
+        (let ((ab-id (match-string-no-properties 1)))
+          (progn 
+            (message (concat "Match " ab-id))
+            ab-id
+            ))
+      (progn
+        (message "No Match")
+        ())
+      )
+    )
   )
 
 ;; No tool bar
@@ -155,6 +192,7 @@
   (magit-repository-directories
    '(
      ("c:/work/IQinAbox" . 1)
+     ("c:/projects" . 1)
      )
    )
   )
